@@ -14,7 +14,6 @@ public class LatencyAspect {
 
     @Around("execution(* me.satyajit.Smart_course_management.service.*.*(..))")
     public Object measureMethodExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
-
         long startTime = System.currentTimeMillis();
 
        Object result = joinPoint.proceed();
