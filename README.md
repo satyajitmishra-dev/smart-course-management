@@ -1,74 +1,153 @@
 # 🎓 Smart Course Management System
 
-A production-ready Spring Boot REST API for managing **Students, Courses, Instructors, and Enrollments** with proper validation, exception handling, soft delete, DTO mapping, service-layer business rules, and enterprise-grade architecture.
+<div align="center">
+
+![Java](https://img.shields.io/badge/Java-25-orange?style=for-the-badge&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0-green?style=for-the-badge&logo=springboot)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
+![Hibernate](https://img.shields.io/badge/Hibernate-ORM-brown?style=for-the-badge&logo=hibernate)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker)
+![Maven](https://img.shields.io/badge/Maven-Build-red?style=for-the-badge&logo=apachemaven)
+
+### Enterprise-Level Course Management Backend
+
+A production-ready **Spring Boot REST API** for managing Courses, Students, Instructors, and Enrollments with clean architecture, validation, exception handling, soft delete, Docker support, and MySQL integration.
+
+🚀 Built for learning real-world backend development concepts.
+
+</div>
 
 ---
 
 # 📌 Project Overview
 
-The Smart Course Management System helps educational organizations manage:
+Smart Course Management System is a backend application that simulates how modern EdTech platforms manage:
 
-- Student registration
-- Course management
-- Instructor management
-- Course enrollments
-- Instructor-course assignment
-- Enrollment status tracking
+- Students
+- Courses
+- Instructors
+- Course Enrollment
+- Capacity Management
+- Status Tracking
+- Soft Delete Operations
 
-The project follows a clean layered architecture used in enterprise Spring Boot applications.
+The project follows enterprise backend development practices including:
+
+✅ Layered Architecture
+
+✅ DTO Validation
+
+✅ Global Exception Handling
+
+✅ Repository Pattern
+
+✅ JPA Relationships
+
+✅ Docker Containerization
+
+✅ RESTful API Design
+
+✅ Clean Code Principles
 
 ---
 
-# 🚀 Tech Stack
+# 🏗️ System Architecture
+
+```text
+Client
+   │
+   ▼
+Controller Layer
+   │
+   ▼
+Service Layer
+   │
+   ▼
+Repository Layer
+   │
+   ▼
+MySQL Database
+```
+
+---
+
+# 🛠 Tech Stack
 
 | Technology | Version |
 |------------|----------|
 | Java | 25 |
-| Spring Boot | 4.x |
+| Spring Boot | 4.0 |
 | Spring Data JPA | Latest |
-| Hibernate | Latest |
-| MySQL | 8+ |
+| Hibernate ORM | Latest |
+| MySQL | 8.0 |
 | Maven | Latest |
+| Docker | Latest |
 | Lombok | Latest |
-| Jakarta Validation | Latest |
 
 ---
 
 # 📂 Project Structure
 
 ```text
-src/main/java
-│
-├── controller
-│   ├── StudentController
-│   ├── CourseController
-│   ├── InstructorController
-│   └── EnrollmentController
-│
-├── service
-│   ├── StudentService
-│   ├── CourseService
-│   ├── InstructorService
-│   └── EnrollmentService
-│
-├── repository
-│   ├── StudentRepository
-│   ├── CourseRepository
-│   ├── InstructorRepository
-│   └── EnrollmentRepository
-│
-├── dto
-│   ├── request
-│   └── response
-│
-├── mapper
-│
-├── entity
-│
-├── exception
-│
-└── config
+src
+└── main
+    ├── java
+    │   └── me.satyajit
+    │       ├── controller
+    │       ├── service
+    │       ├── repository
+    │       ├── entity
+    │       ├── dto
+    │       ├── exception
+    │       └── config
+    │
+    └── resources
+        └── application.properties
 ```
+
+---
+
+# ✨ Features
+
+## Course Management
+
+- Create Course
+- Get All Courses
+- Get Course By ID
+- Update Course
+- Soft Delete Course
+- Assign Instructor
+
+---
+
+## Student Management
+
+- Create Student
+- Get All Students
+- Get Student By ID
+- Update Student
+- Soft Delete Student
+
+---
+
+## Instructor Management
+
+- Create Instructor
+- Get All Instructors
+- Get Instructor By ID
+- Update Instructor
+- Soft Delete Instructor
+
+---
+
+## Enrollment Management
+
+- Enroll Student
+- Prevent Duplicate Enrollment
+- Course Capacity Validation
+- Complete Enrollment
+- Cancel Enrollment
+- Enrollment Status Tracking
 
 ---
 
@@ -77,13 +156,12 @@ src/main/java
 ## Student
 
 ```java
-id
-name
-email
-mobileNo
-createdAt
-updatedAt
-deleted
+Student
+├── id
+├── name
+├── email
+├── mobileNo
+└── isDeleted
 ```
 
 ---
@@ -91,15 +169,14 @@ deleted
 ## Course
 
 ```java
-id
-title
-description
-capacity
-price
-createdAt
-updatedAt
-deleted
-instructor_id
+Course
+├── id
+├── title
+├── description
+├── capacity
+├── price
+├── instructor
+└── isDeleted
 ```
 
 ---
@@ -107,13 +184,13 @@ instructor_id
 ## Instructor
 
 ```java
-id
-name
-email
-specialization
-createdAt
-updatedAt
-deleted
+Instructor
+├── id
+├── name
+├── email
+├── specialization
+├── createdAt
+└── isDeleted
 ```
 
 ---
@@ -121,82 +198,74 @@ deleted
 ## Enrollment
 
 ```java
-id
-student_id
-course_id
-enrollmentDate
-status
-```
-
----
-
-# Enrollment Status
-
-```java
-ACTIVE
-COMPLETED
-CANCELLED
+Enrollment
+├── id
+├── student
+├── course
+├── enrollmentDate
+└── enrollmentStatus
 ```
 
 ---
 
 # 🔗 Entity Relationships
 
-## Student ↔ Enrollment
-
 ```text
-One Student
-      ↓
-Many Enrollments
+Instructor
+     │
+     │ One-To-Many
+     ▼
+ Course
+
+Student
+     │
+     │ Many-To-One
+     ▼
+Enrollment
+     ▲
+     │
+     │ Many-To-One
+     │
+Course
 ```
 
 ---
 
-## Course ↔ Enrollment
-
-```text
-One Course
-      ↓
-Many Enrollments
-```
-
----
-
-## Instructor ↔ Course
-
-```text
-One Instructor
-      ↓
-Many Courses
-```
-
----
-
-# 📚 Student APIs
-
-Base URL
+# 🌐 API Base URL
 
 ```http
-/api/v1/students
+http://localhost:8080/api/v1
 ```
 
 ---
 
-## Create Student
+# 📚 API Documentation
 
-### POST
+---
 
-```http
-/api/v1/students
-```
+# Course APIs
+
+| Method | Endpoint |
+|----------|-----------|
+| POST | /courses |
+| GET | /courses |
+| GET | /courses/{id} |
+| PUT | /courses/{id} |
+| PATCH | /courses/{id} |
+| PATCH | /courses/{courseId}/assign-instructor/{instructorId} |
+
+---
+
+## Create Course
 
 ### Request
 
 ```json
 {
-  "name": "Satyajit Mishra",
-  "email": "satyajit@gmail.com",
-  "mobileNo": "9876543210"
+  "title": "Spring Boot Masterclass",
+  "description": "Complete Spring Boot course",
+  "capacity": 50,
+  "price": 4999
 }
 ```
 
@@ -205,127 +274,52 @@ Base URL
 ```json
 {
   "id": 1,
-  "name": "Satyajit Mishra",
-  "email": "satyajit@gmail.com",
-  "mobileNo": "9876543210",
-  "createdAt": "2026-09-07T12:30:00"
+  "title": "Spring Boot Masterclass",
+  "description": "Complete Spring Boot course",
+  "capacity": 50,
+  "price": 4999
 }
 ```
 
 ---
 
-## Get Student
+# Student APIs
 
-```http
-GET /api/v1/students/1
-```
-
----
-
-## Get All Students
-
-```http
-GET /api/v1/students
-```
+| Method | Endpoint |
+|----------|-----------|
+| POST | /students |
+| GET | /students |
+| GET | /students/{id} |
+| PUT | /students/{id} |
+| PATCH | /students/{id} |
 
 ---
 
-## Update Student
-
-```http
-PUT /api/v1/students/1
-```
-
----
-
-## Delete Student
-
-```http
-PATCH /api/v1/students/1
-```
-
-Soft delete enabled.
-
----
-
-# 📚 Course APIs
-
-Base URL
-
-```http
-/api/v1/courses
-```
-
----
-
-## Create Course
-
-```http
-POST /api/v1/courses
-```
-
-### Request
+## Create Student
 
 ```json
 {
-  "title": "Spring Boot Masterclass",
-  "description": "Complete Spring Boot Training",
-  "capacity": 50,
-  "price": 4999.0
+  "name": "Satyajit Mishra",
+  "email": "satyajit@gmail.com",
+  "mobileNo": "9123456789"
 }
 ```
 
 ---
 
-## Get Course
+# Instructor APIs
 
-```http
-GET /api/v1/courses/1
-```
-
----
-
-## Get All Courses
-
-```http
-GET /api/v1/courses
-```
-
----
-
-## Update Course
-
-```http
-PUT /api/v1/courses/1
-```
-
----
-
-## Delete Course
-
-```http
-PATCH /api/v1/courses/1
-```
-
----
-
-# 👨‍🏫 Instructor APIs
-
-Base URL
-
-```http
-/api/v1/instructor
-```
+| Method | Endpoint |
+|----------|-----------|
+| POST | /instructor |
+| GET | /instructor |
+| GET | /instructor/{id} |
+| PUT | /instructor/{id} |
+| PATCH | /instructor/{id} |
 
 ---
 
 ## Create Instructor
-
-```http
-POST /api/v1/instructor
-```
-
-### Request
 
 ```json
 {
@@ -337,84 +331,19 @@ POST /api/v1/instructor
 
 ---
 
-## Get Instructor
+# Enrollment APIs
 
-```http
-GET /api/v1/instructor/1
-```
-
----
-
-## Get All Instructors
-
-```http
-GET /api/v1/instructor
-```
-
----
-
-## Update Instructor
-
-```http
-PUT /api/v1/instructor/1
-```
-
----
-
-## Delete Instructor
-
-```http
-PATCH /api/v1/instructor/1
-```
-
----
-
-# 🎯 Instructor Assignment APIs
-
-Assign instructor to course.
-
----
-
-## Assign Instructor
-
-```http
-PATCH /api/v1/courses/1/instructor/1
-```
-
-Meaning:
-
-```text
-Course ID = 1
-Instructor ID = 1
-```
-
-### Success Response
-
-```json
-{
-  "message": "Instructor assigned successfully"
-}
-```
-
----
-
-# 🎓 Enrollment APIs
-
-Base URL
-
-```http
-/api/v1/enrollments
-```
+| Method | Endpoint |
+|----------|-----------|
+| POST | /enrollments |
+| GET | /enrollments |
+| GET | /enrollments/{id} |
+| PATCH | /enrollments/cancel?id={id} |
+| PATCH | /enrollments/completed?id={id} |
 
 ---
 
 ## Create Enrollment
-
-```http
-POST /api/v1/enrollments
-```
-
-### Request
 
 ```json
 {
@@ -423,174 +352,72 @@ POST /api/v1/enrollments
 }
 ```
 
-### Success Response
-
-```json
-{
-  "id": 1,
-  "studentName": "Satyajit Mishra",
-  "courseTitle": "Spring Boot Masterclass",
-  "enrollmentDate": "2026-09-07T13:08:24",
-  "enrollmentStatus": "ACTIVE"
-}
-```
-
 ---
 
-## Get Enrollment
-
-```http
-GET /api/v1/enrollments/1
-```
-
----
-
-## Get All Enrollments
-
-```http
-GET /api/v1/enrollments
-```
-
----
-
-## Cancel Enrollment
-
-```http
-PATCH /api/v1/enrollments/cancel?id=1
-```
-
-### Response
-
-```json
-{
-  "message": "Enrollment CANCELED"
-}
-```
-
----
-
-## Complete Enrollment
-
-```http
-PATCH /api/v1/enrollments/completed?id=1
-```
-
-### Response
-
-```json
-{
-  "message": "Enrollment COMPLETED"
-}
-```
-
----
-
-# 🛡️ Validations
-
-## Student Validation
-
-```java
-@NotBlank
-@Size(min = 3,max = 50)
-
-@Email
-
-@Pattern(regexp = "^[0-9]{10}$")
-```
-
----
-
-## Course Validation
-
-```java
-@NotBlank
-@Size(min = 3,max = 100)
-
-@NotNull
-@Min(1)
-
-@NotNull
-@DecimalMin("0.0")
-```
-
----
-
-## Instructor Validation
-
-```java
-@NotBlank
-@Size(min = 3)
-
-@Email
-
-@NotBlank
-@Size(min = 3)
-```
-
----
-
-# ❌ Business Rule Exceptions
+# ⚙️ Validation Rules
 
 ## Student
 
-- Email already exists
-- Student not found
-- Duplicate update request
-
----
-
-## Course
-
-- Course not found
-- Title already exists
-- Duplicate update request
+| Validation | Rule |
+|------------|------|
+| Name | Required |
+| Email | Unique |
+| Mobile Number | Required |
 
 ---
 
 ## Instructor
 
-- Instructor not found
-- Email already exists
-- Duplicate update request
+| Validation | Rule |
+|------------|------|
+| Email | Unique |
+| Name | Required |
+| Specialization | Required |
+
+---
+
+## Course
+
+| Validation | Rule |
+|------------|------|
+| Title | Required |
+| Capacity | Must Be Positive |
+| Price | Must Be Positive |
 
 ---
 
 ## Enrollment
 
-- Student not found
-- Course not found
-- Already enrolled
-- Course capacity reached
-- Enrollment not found
-- Enrollment already cancelled
-- Enrollment already completed
+| Validation | Rule |
+|------------|------|
+| Student Exists | Required |
+| Course Exists | Required |
+| Capacity Check | Required |
+| Duplicate Enrollment | Not Allowed |
 
 ---
 
-# 📌 Sample Error Response
+# ❌ Exception Handling
+
+The application includes centralized exception handling.
+
+Examples:
 
 ```json
 {
-  "timestamp": "2026-09-07T13:00:00",
-  "status": 400,
-  "error": "Bad Request",
-  "message": "Validation Failed",
-  "path": "/api/v1/students",
-  "fieldErrors": {
-    "name": "Name cannot be blank",
-    "email": "Enter a valid email",
-    "mobileNo": "Enter valid mobile number"
-  }
+  "timestamp": "2026-09-08T10:00:00",
+  "status": 404,
+  "message": "Student Not Found"
 }
 ```
 
 ---
 
-# 🧪 Complete Testing Flow
+# 🧪 Test Flow
 
-## Step 1
+---
 
-Create Instructor
+## 1. Create Instructors
 
 ```http
 POST /api/v1/instructor
@@ -598,9 +425,7 @@ POST /api/v1/instructor
 
 ---
 
-## Step 2
-
-Create Course
+## 2. Create Courses
 
 ```http
 POST /api/v1/courses
@@ -608,19 +433,15 @@ POST /api/v1/courses
 
 ---
 
-## Step 3
-
-Assign Instructor To Course
+## 3. Assign Instructor
 
 ```http
-PATCH /api/v1/courses/1/instructor/1
+PATCH /api/v1/courses/1/assign-instructor/1
 ```
 
 ---
 
-## Step 4
-
-Create Student
+## 4. Create Students
 
 ```http
 POST /api/v1/students
@@ -628,9 +449,7 @@ POST /api/v1/students
 
 ---
 
-## Step 5
-
-Create Enrollment
+## 5. Create Enrollment
 
 ```http
 POST /api/v1/enrollments
@@ -638,19 +457,18 @@ POST /api/v1/enrollments
 
 ---
 
-## Step 6
-
-Get Enrollment
+## 6. Verify Data
 
 ```http
-GET /api/v1/enrollments/1
+GET /api/v1/courses
+GET /api/v1/students
+GET /api/v1/instructor
+GET /api/v1/enrollments
 ```
 
 ---
 
-## Step 7
-
-Complete Enrollment
+## 7. Complete Enrollment
 
 ```http
 PATCH /api/v1/enrollments/completed?id=1
@@ -658,50 +476,128 @@ PATCH /api/v1/enrollments/completed?id=1
 
 ---
 
-## Step 8
-
-Verify Enrollment
+## 8. Cancel Enrollment
 
 ```http
-GET /api/v1/enrollments/1
+PATCH /api/v1/enrollments/cancel?id=2
 ```
 
 ---
 
-# 🔥 Enterprise Features Implemented
+# 🐳 Docker Support
 
-✅ DTO Pattern
+## Build Application
 
-✅ Service Layer Validation
+```bash
+mvn clean package
+```
 
-✅ Custom Exceptions
+---
 
-✅ Global Exception Handler
+## Build Docker Image
 
-✅ Soft Delete
+```bash
+docker build -t smart-course-management .
+```
 
-✅ Repository Layer Abstraction
+---
 
-✅ Mapper Layer
+## Run Container
 
-✅ Entity Relationships
+```bash
+docker run -p 8080:8080 smart-course-management
+```
 
-✅ Business Rule Validation
+---
 
-✅ Enrollment Workflow
+## Docker Compose
 
-✅ Instructor Assignment
+```bash
+docker compose up --build
+```
 
-✅ Clean Architecture
+---
 
-✅ RESTful API Design
+# 🚀 Future Enhancements
+
+- JWT Authentication
+- Spring Security
+- Role Based Access Control
+- Swagger/OpenAPI Documentation
+- Redis Caching
+- Email Notifications
+- Payment Integration
+- File Upload Support
+- AWS Deployment
+- CI/CD Pipeline
+- Monitoring with Prometheus & Grafana
+- Kubernetes Deployment
+
+---
+
+# 📈 Learning Outcomes
+
+By building this project, developers will learn:
+
+- Spring Boot Fundamentals
+- REST API Design
+- JPA Relationships
+- Hibernate ORM
+- Validation Techniques
+- Exception Handling
+- Layered Architecture
+- Docker Containerization
+- MySQL Integration
+- Enterprise Backend Development
+
+---
+
+# 🔗 GitHub Repository
+
+**Repository:**
+
+👉 https://github.com/satyajitmishra-dev/smart-course-management
 
 ---
 
 # 👨‍💻 Author
 
-**Satyajit Mishra**
+## Satyajit Mishra
 
-Backend Developer | Java | Spring Boot | JPA | Hibernate
+Java Backend Developer
 
-Building scalable enterprise applications with clean architecture and industry-standard practices.
+- Java
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- REST APIs
+- Docker
+- MySQL
+
+### Connect With Me
+
+GitHub:
+
+https://github.com/satyajitmishra-dev
+
+---
+
+# ⭐ Support
+
+If you found this project useful:
+
+⭐ Star the repository
+
+🍴 Fork the project
+
+📝 Share your feedback
+
+🚀 Build something amazing with it
+
+---
+
+<div align="center">
+
+### Built with Spring Boot ❤️ by Satyajit Mishra
+
+</div>
